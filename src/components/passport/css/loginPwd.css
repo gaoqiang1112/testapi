@@ -1,0 +1,22 @@
+.yd-loginPwd{position: relative;width:100%;height:100%;}
+.header{height: 46px;line-height:46px;border-bottom: 1px solid #EAEAEA;position: relative;box-sizing: border-box;}
+.header-goback{width: 14px;height: 14px;left: 18px;position: absolute;top:16px;}
+.header-goback img{width:100%;height:100%;position: absolute;}
+.header-title{font-size:17px;text-align: center;}
+.header-register{font-size: 14px;color:#778087;right: 10px;top:0;position: absolute;}
+.container{padding: 0 25px;}
+.container h1{margin-top: 42px;font-size:23px;font-weight: 500;line-height: 32px;}
+.yd-loginPwd form{margin-top: 23px;}
+.input-item{margin-top: 12px;}
+.input-item .item-tips{font-size: 12px;color: #AEB3C0;line-height: 17px;}
+.item-input{height: 30px;line-height: 30px;border-bottom: 1px solid #EAEAEA;}
+.item-input input{border: none;outline: none;color:#3B4664;font-size:16px;line-height: 22px;width:calc(100% - 96px);}
+.item-input input::-webkit-input-placeholder{font-size: 14px;color:#CACDD6;line-height: 20px;}
+.toPage{
+  display: flex;justify-content: space-between;line-height: 17px;margin-top: 22px;font-size: 12px;}
+.toCodePage{color:#778087;}
+.toForgetPage{color:#545DFF;}
+.login-btn{width: 100%;height:45px;background: #BABEFF;color:#FFFFFF;border: none;margin-top: 30px;outline: none; }
+.version{text-align: center; font-size:13px;color:#AEB3C0;line-height: 17px;position: fixed;bottom: 19px;left: 0; right: 0;}
+
+.form-infoBlue{color:#545DFF;font-size: 12px;float: right;}
