@@ -22,7 +22,7 @@
       </div>
     </div>
     <div style="height: 70px"></div>
-    <div v-if="dataTwo != null" class="diTu" >
+    <div class="diTu" :style="{visibility:canShow?'visible':'hidden'}">
       <div class="diTuList">
         <div class="diTuListItem" :class="[activeNo ==index ? 'isActive' : '', 'diTuListItem']" v-for="(item,index) in list" @click="getPlaneChart(item.PlaneChartId,index)">
           {{item.PlaneChartName}}
@@ -69,7 +69,8 @@
         maxSideValue:1,
         step:0.01,
         isWayNeedScale:true,
-        isBuildingNeedScale:true
+        isBuildingNeedScale:true,
+        canShow:false
       }
     },
     created(){
@@ -228,7 +229,7 @@
         this.drawBuilding(this.bCtx,this.scaleNum,[]);
         this.drawWay(this.wCtx,this.scaleNum,[]);
         this.$refs.fatherBg.style.cssText = 'transform: scale('+this.scaleNum+');';
-
+        this.canShow=true
       },
       resetMap(){
         this.slideValue=1;
