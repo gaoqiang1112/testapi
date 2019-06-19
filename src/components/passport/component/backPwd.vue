@@ -189,10 +189,24 @@
           this.drawText(bCtx, item.BoothNo, fontSize+"px bold 黑体", fontColor, 'left', 'top', x, y);
           this.drawText(bCtx, item.BoothName, fontSize+"px bold 黑体", fontColor, 'left', 'middle', logoX+logoW, y+h/2);
           this.drawText(bCtx, item.BoothNo, fontSize+"px bold 黑体", fontColor, 'right', 'bottom', x+w, y+h);
+          // 画logo
           const img = new Image();
           img.src='https://asks.oss-cn-beijing.aliyuncs.com/daihuahua/logo/logo_512.png';
           img.onload=function(){
             bCtx.drawImage(img,logoX,logoY,logoW,logoH)
+          }
+          // 画起点终点图
+          const img2 = new Image();
+          const shuiDiW = 30;
+          const shuiDiH = 38;
+          if(i == 0){
+            img2.src='https://asks.oss-cn-beijing.aliyuncs.com/ydzbapp/u88_q.jpg';
+          }else{
+            img2.src='https://asks.oss-cn-beijing.aliyuncs.com/ydzbapp/u88_z.jpg';
+          }
+          img2.onload=function(){
+            bCtx.drawImage(img,logoX,logoY,logoW,logoH)
+            bCtx.drawImage(img2,x+w/2-shuiDiW/2,y+h/2-shuiDiH,shuiDiW,shuiDiH)
           }
         }
         bCtx.closePath();
