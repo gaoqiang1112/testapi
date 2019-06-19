@@ -62,12 +62,14 @@
         startNodeName:'论',
         endNodeName:'龙',
         wCtx:null,
+        bCtx:null,
         scaleNum:0,
         slideValue:1,
         minSideValue:1,
         maxSideValue:3,
         step:0.02,
-        isNeedScale:true
+        isWayNeedScale:true,
+        isBuildingNeedScale:true
       }
     },
     created(){
@@ -103,6 +105,8 @@
       initCanvas(){
         const wayCanvas = this.$refs.drawWay;
         this.wCtx = wayCanvas.getContext('2d');
+        const buildingCanvas = this.$refs.drawBuilding;
+        this.bCtx = buildingCanvas.getContext('2d');
       },
       getPlaneChart(id,index){
         const that = this;
@@ -113,7 +117,9 @@
           planeChartId:id
         }
         this.$http.postRequest(params).then(function (response) {
+          console.info('***********333***********');
           console.info(response)
+          console.info('***********333***********');
           if(response.Code == 1){
             that.dataTwo = response.Data;
             that.scaleNum = window.screen.width/that.dataTwo.DWidth;
@@ -133,11 +139,20 @@
           endNodeName:that.endNodeName
         }
         this.$http.postRequest(params).then(function (response) {
+          console.info('***********444***********');
           console.info(response)
+          console.info('***********444***********');
           if(response.Code == 1){
             that.endNodeName = response.Data.EndNodeName;
             that.startNodeName = response.Data.StartNodeName;
+            const startBoothId = response.Data.StartBoothId;
+            const endBoothId = response.Data.EndBoothId;
+            const drawBuildingList = [
+              that.dataTwo.lst[startBoothId],
+              that.dataTwo.lst[endBoothId]
+            ];
             that.$nextTick(function() {
+              that.drawBuilding(that.bCtx,that.scaleNum,drawBuildingList)
               that.drawWay(that.wCtx,that.scaleNum,response.Data.lst);
             })
           }else(
@@ -145,26 +160,52 @@
           )
         })
       },
-      drawBuilding(n){
-        const buildingCanvas = this.$refs.drawBuilding;
-        let bCtx = buildingCanvas.getContext('2d');
-        bCtx.clearRect(0,0,this.fatherBgWidth,this.fatherBgHeight);
+      drawText(_paint, _text, _fontSzie, _color, _textAlign, _textBaseline, _startX, _height) {
+        _paint.font = _fontSzie;
+        _paint.fillStyle = _color;
+        _paint.textAlign = _textAlign;
+        _paint.textBaseline = _textBaseline;
+        _paint.fillText(_text, _startX, _height);
+      },
+      drawBuilding(bCtx,n,dataInfo){
+        bCtx.clearRect(0,0,this.dataTwo.DWidth,this.dataTwo.DHeight);
         bCtx.beginPath();
-        bCtx.fillStyle="#00000";
-        bCtx.scale(n,n);
-        for (let i =0;i<this.dataTwo.lst.length;i++){
-          const item = this.dataTwo.lst[i];
-          bCtx.rect(item.PointX,item.PointY,item.DWidth,item.DHeight);
+        if(this.isBuildingNeedScale){
+          bCtx.scale(n,n);
+          this.isBuildingNeedScale=false
         }
-        bCtx.fill()
+        for (let i =0;i<dataInfo.length;i++){
+          const item = dataInfo[i];
+          console.info(item)
+          const fontSize = 50;
+          const fontColor = 'red'
+          const logoW = 100;
+          const logoH = 100;
+          const x = item.PointX;
+          const y = item.PointY;
+          const w = item.DWidth;
+          const h = item.DHeight;
+          const logoX = x+(w-(logoW+item.BoothName.length*fontSize))/2;
+          const logoY = y+(h/2-logoH/2);
+          bCtx.fillStyle="#eaeaea";
+          bCtx.fillRect(item.PointX,item.PointY,item.DWidth,item.DHeight);
+          this.drawText(bCtx, item.BoothNo, fontSize+"px bold 黑体", fontColor, 'left', 'top', x, y);
+          this.drawText(bCtx, item.BoothName, fontSize+"px bold 黑体", fontColor, 'left', 'middle', logoX+logoW, y+h/2);
+          this.drawText(bCtx, item.BoothNo, fontSize+"px bold 黑体", fontColor, 'right', 'bottom', x+w, y+h);
+          const img = new Image();
+          img.src='https://asks.oss-cn-beijing.aliyuncs.com/daihuahua/logo/logo_512.png';
+          img.onload=function(){
+            bCtx.drawImage(img,logoX,logoY,logoW,logoH)
+          }
+        }
         bCtx.closePath();
       },
       drawWay(wCtx,n,dataInfo){
         wCtx.clearRect(0,0,this.dataTwo.DWidth,this.dataTwo.DHeight);
         wCtx.beginPath();
-        if(this.isNeedScale){
+        if(this.isWayNeedScale){
           wCtx.scale(n,n);
-          this.isNeedScale=false
+          this.isWayNeedScale=false
         }
         for (let i =1;i<dataInfo.length;i++){
           const item = dataInfo[i];
@@ -177,7 +218,7 @@
         wCtx.closePath();
       },
       loadImage(){
-        this.drawBuilding(this.scaleNum);
+        this.drawBuilding(this.bCtx,this.scaleNum,[]);
         this.drawWay(this.wCtx,this.scaleNum,[]);
       },
       resetMap(){
