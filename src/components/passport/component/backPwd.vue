@@ -1,5 +1,5 @@
 <template>
-  <div class="diTuPage">
+  <div class="diTuPage" onselectstart="return false">
     <div class="header" >
       <div class="header_l">
         <div class="header_l_t">
@@ -83,7 +83,8 @@
       slideValue:function (newV,oldV) {
         if(oldV!=0){
           this.scaleNum=(this.minSideValue+(this.step*newV))
-          this.$refs.fatherBg.style.cssText = 'transform: scale('+(this.minSideValue+(this.step*newV))+');';
+          // this.$refs.fatherBg.style.cssText = 'transform: scale('+(this.minSideValue+(this.step*newV))+');';
+          this.$refs.fatherBg.style.cssText = 'zoom: '+(this.minSideValue+(this.step*newV))+';';
         }
       }
     },
@@ -228,7 +229,8 @@
       loadImage(){
         this.drawBuilding(this.bCtx,this.scaleNum,[]);
         this.drawWay(this.wCtx,this.scaleNum,[]);
-        this.$refs.fatherBg.style.cssText = 'transform: scale('+this.scaleNum+');';
+        // this.$refs.fatherBg.style.cssText = 'transform: scale('+this.scaleNum+');';
+        this.$refs.fatherBg.style.cssText = 'zoom: '+this.scaleNum+';';
         this.canShow=true
       },
       resetMap(){
