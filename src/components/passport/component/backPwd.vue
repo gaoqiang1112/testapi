@@ -93,7 +93,6 @@
           url:'/News/GetPlaneChart',
         }
         this.$http.postRequest(params).then(function (response) {
-          console.info(response)
           if(response.Code == 1){
             that.list = response.Data;
             that.getPlaneChart(response.Data[0].PlaneChartId)
@@ -117,14 +116,14 @@
           planeChartId:id
         }
         this.$http.postRequest(params).then(function (response) {
-          console.info('***********333***********');
-          console.info(response)
-          console.info('***********333***********');
           if(response.Code == 1){
             that.dataTwo = response.Data;
             that.scaleNum = window.screen.width/that.dataTwo.DWidth;
-            that.fatherBgWidth = that.dataTwo.DWidth*that.scaleNum;
-            that.fatherBgHeight = that.dataTwo.DHeight*that.scaleNum;
+
+            // that.fatherBgWidth = that.dataTwo.DWidth*that.scaleNum;
+            // that.fatherBgHeight = that.dataTwo.DHeight*that.scaleNum;
+            that.fatherBgWidth = that.dataTwo.DWidth;
+            that.fatherBgHeight = that.dataTwo.DHeight;
           }else(
             alert(response.Message)
           )
@@ -139,9 +138,6 @@
           endNodeName:that.endNodeName
         }
         this.$http.postRequest(params).then(function (response) {
-          console.info('***********444***********');
-          console.info(response)
-          console.info('***********444***********');
           if(response.Code == 1){
             that.endNodeName = response.Data.EndNodeName;
             that.startNodeName = response.Data.StartNodeName;
@@ -170,17 +166,17 @@
       drawBuilding(bCtx,n,dataInfo){
         bCtx.clearRect(0,0,this.dataTwo.DWidth,this.dataTwo.DHeight);
         bCtx.beginPath();
-        if(this.isBuildingNeedScale){
-          bCtx.scale(n,n);
-          this.isBuildingNeedScale=false
-        }
+        // if(this.isBuildingNeedScale){
+        //   bCtx.scale(n,n);
+        //   this.isBuildingNeedScale=false
+        // }
         for (let i =0;i<dataInfo.length;i++){
           const item = dataInfo[i];
           console.info(item)
-          const fontSize = 50;
+          const fontSize = 20;
           const fontColor = 'red'
-          const logoW = 100;
-          const logoH = 100;
+          const logoW = 70;
+          const logoH = 70;
           const x = item.PointX;
           const y = item.PointY;
           const w = item.DWidth;
@@ -203,10 +199,10 @@
       drawWay(wCtx,n,dataInfo){
         wCtx.clearRect(0,0,this.dataTwo.DWidth,this.dataTwo.DHeight);
         wCtx.beginPath();
-        if(this.isWayNeedScale){
-          wCtx.scale(n,n);
-          this.isWayNeedScale=false
-        }
+        // if(this.isWayNeedScale){
+        //   wCtx.scale(n,n);
+        //   this.isWayNeedScale=false
+        // }
         for (let i =1;i<dataInfo.length;i++){
           const item = dataInfo[i];
           wCtx.strokeStyle=item.Stroke;
@@ -220,6 +216,8 @@
       loadImage(){
         this.drawBuilding(this.bCtx,this.scaleNum,[]);
         this.drawWay(this.wCtx,this.scaleNum,[]);
+        this.$refs.fatherBg.style.cssText = 'transform: scale('+this.scaleNum+');';
+
       },
       resetMap(){
         this.slideValue=1;
@@ -325,6 +323,7 @@
     flex-direction: column;
     align-items: center;
     background-color: white;
+    z-index: 105;
   }
   .sliderBar_r{
     position: fixed;
@@ -337,5 +336,6 @@
     background-color: #1989fa;
     border-radius: 3px;
     color: white;
+    z-index: 105;
   }
 </style>
