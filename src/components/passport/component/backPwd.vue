@@ -67,7 +67,7 @@
         slideValue:0,
         minSideValue:0,
         maxSideValue:1,
-        step:0.02,
+        step:0.01,
         isWayNeedScale:true,
         isBuildingNeedScale:true
       }
@@ -232,6 +232,7 @@
       },
       resetMap(){
         this.slideValue=1;
+        this.drawBuilding(this.bCtx,this.scaleNum,[]);
         this.drawWay(this.wCtx,this.scaleNum,[]);
         this.endNodeName='';
         this.startNodeName='';
@@ -248,107 +249,5 @@
 </script>
 
 <style scoped >
-
-  .diTuPage{
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-  }
-  .header{
-    display: flex;
-    padding: 0 5%;
-    height: 70px;
-    width: 90%;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 102;
-    background-color: white;
-  }
-  .header_l .input_border{
-    display: inline-block;
-    border: 1px solid #EAEAEA;
-    width: 72%;
-  }
-  .header_l .input_border img{
-    vertical-align: middle;
-  }
-
-  .header_l input{
-    width: 81%;
-  }
-  .header_r {
-    width: 70px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    color: white;
-    border-radius: 3px;
-    background-color: #1989fa;
-  }
-  .diTu{
-    width: 100%;
-    height: calc(100% - 70px);
-    /*overflow: auto;*/
-  }
-  .diTuList{
-    position: fixed;
-    right: 0;
-    top: 25%;
-    z-index: 101;
-  }
-  .diTuImg{
-    transform-origin: top left;
-  }
-  .diTuImg,#drawBuilding,#drawWay{
-    z-index: 100;
-  }
-  .diTuListItem{
-    width: 25px;
-    height: 25px;
-    margin-top: 5px;
-    text-align: center;
-    line-height: 25px;
-    border-radius: 4px;
-  }
-  .diTuList .isActive{
-    background-color: #1989fa;
-    color: white;
-  }
-  .fatherBg{
-    position: relative;
-    /*border: 1px solid red;*/
-    transform-origin: top left;
-  }
-  #drawBuilding,#drawWay{
-    position: absolute;
-    z-index: 101;
-    top: 0;
-    left: 0;
-  }
-  .sliderBar_l{
-    position: fixed;
-    left: 0px;
-    bottom: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    z-index: 105;
-  }
-  .sliderBar_r{
-    position: fixed;
-    right: 10px;
-    bottom: 5px;
-    width: 45px;
-    height: 35px;
-    line-height: 35px;
-    text-align: center;
-    background-color: #1989fa;
-    border-radius: 3px;
-    color: white;
-    z-index: 105;
-  }
+  @import "../css/backPwd.css";
 </style>

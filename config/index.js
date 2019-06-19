@@ -10,7 +10,12 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+     '/':{
+       target:'http://www.diningspace.cn:8087',
+       changeOrigin:true,
+     }
+    },
 
     // Various Dev Server settings
     host: '192.168.4.36', // can be overwritten by process.env.HOST
@@ -43,7 +48,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: 'https://asks.oss-cn-beijing.aliyuncs.com/static/',
 
     /**
      * Source Maps

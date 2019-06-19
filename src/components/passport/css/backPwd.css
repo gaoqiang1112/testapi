@@ -1,0 +1,112 @@
+*{
+  -webkit-touch-callout:none;  /*系统默认菜单被禁用*/
+  -webkit-user-select:none; /*webkit浏览器*/
+  -khtml-user-select:none; /*早期浏览器*/
+  -moz-user-select:none;/*火狐*/
+  -ms-user-select:none; /*IE10*/
+  user-select:none;
+}
+.diTuPage{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: white;
+}
+.header{
+  display: flex;
+  padding: 0 5%;
+  height: 70px;
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 102;
+  background-color: white;
+}
+.header_l .input_border{
+  display: inline-block;
+  border: 1px solid #EAEAEA;
+  width: 72%;
+}
+.header_l .input_border img{
+  vertical-align: middle;
+}
+
+.header_l input{
+  width: 81%;
+  border: none;
+}
+.header_r {
+  width: 70px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: white;
+  border-radius: 3px;
+  background-color: #1989fa;
+}
+.diTu{
+  width: 100%;
+  height: calc(100% - 70px);
+}
+.diTuList{
+  position: fixed;
+  right: 0;
+  top: 25%;
+  z-index: 101;
+}
+.diTuImg{
+  transform-origin: top left;
+}
+.diTuImg,#drawBuilding,#drawWay{
+  z-index: 100;
+}
+.diTuListItem{
+  width: 25px;
+  height: 25px;
+  margin-top: 5px;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 4px;
+}
+.diTuList .isActive{
+  background-color: #1989fa;
+  color: white;
+}
+.fatherBg{
+  position: relative;
+  /*border: 1px solid red;*/
+  transform-origin: top left;
+}
+#drawBuilding,#drawWay{
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  left: 0;
+}
+.sliderBar_l{
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  z-index: 105;
+  width: 50px;
+}
+.sliderBar_r{
+  position: fixed;
+  right: 10px;
+  bottom: 5px;
+  width: 45px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  background-color: #1989fa;
+  border-radius: 3px;
+  color: white;
+  z-index: 105;
+}

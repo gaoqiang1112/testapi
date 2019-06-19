@@ -1,5 +1,5 @@
 import axios from 'axios';
-axios.defaults.baseURL = 'http://www.diningspace.cn:8087';
+// axios.defaults.baseURL = 'http://www.diningspace.cn:8087';
 axios.defaults.timeout = 30000
 
 import { Toast} from "mint-ui";
@@ -14,7 +14,6 @@ axios.interceptors.request.use((config) => {
 })
 
 axios.interceptors.response.use(function (response) {
-
   if(response.status == 200){
     return response.data
   }else{
@@ -24,7 +23,6 @@ axios.interceptors.response.use(function (response) {
       duration: 2000
     });
   }
-
 }, function (error) {
   console.info('***********1111***********');
   console.info(error);
