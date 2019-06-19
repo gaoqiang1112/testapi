@@ -22,7 +22,7 @@
       </div>
     </div>
     <div style="height: 70px"></div>
-    <div v-if="dataTwo != null" class="diTu">
+    <div v-if="dataTwo != null" class="diTu" >
       <div class="diTuList">
         <div class="diTuListItem" :class="[activeNo ==index ? 'isActive' : '', 'diTuListItem']" v-for="(item,index) in list" @click="getPlaneChart(item.PlaneChartId,index)">
           {{item.PlaneChartName}}
@@ -64,9 +64,9 @@
         wCtx:null,
         bCtx:null,
         scaleNum:0,
-        slideValue:1,
-        minSideValue:1,
-        maxSideValue:3,
+        slideValue:0,
+        minSideValue:0,
+        maxSideValue:1,
         step:0.02,
         isWayNeedScale:true,
         isBuildingNeedScale:true
@@ -119,9 +119,9 @@
           if(response.Code == 1){
             that.dataTwo = response.Data;
             that.scaleNum = window.screen.width/that.dataTwo.DWidth;
+            that.slideValue = window.screen.width/that.dataTwo.DWidth;
+            that.minSideValue = window.screen.width/that.dataTwo.DWidth;
 
-            // that.fatherBgWidth = that.dataTwo.DWidth*that.scaleNum;
-            // that.fatherBgHeight = that.dataTwo.DHeight*that.scaleNum;
             that.fatherBgWidth = that.dataTwo.DWidth;
             that.fatherBgHeight = that.dataTwo.DHeight;
           }else(
@@ -166,17 +166,18 @@
       drawBuilding(bCtx,n,dataInfo){
         bCtx.clearRect(0,0,this.dataTwo.DWidth,this.dataTwo.DHeight);
         bCtx.beginPath();
-        // if(this.isBuildingNeedScale){
-        //   bCtx.scale(n,n);
-        //   this.isBuildingNeedScale=false
-        // }
         for (let i =0;i<dataInfo.length;i++){
           const item = dataInfo[i];
-          console.info(item)
-          const fontSize = 20;
+          let calculationResult = item.DWidth;
+          if(item.DWidth < item.DHeight){
+            calculationResult= item.DWidth/5
+          }else{
+            calculationResult= item.DHeight/5
+          }
+          const fontSize = calculationResult;
           const fontColor = 'red'
-          const logoW = 70;
-          const logoH = 70;
+          const logoW = calculationResult;
+          const logoH = calculationResult;
           const x = item.PointX;
           const y = item.PointY;
           const w = item.DWidth;
@@ -199,10 +200,6 @@
       drawWay(wCtx,n,dataInfo){
         wCtx.clearRect(0,0,this.dataTwo.DWidth,this.dataTwo.DHeight);
         wCtx.beginPath();
-        // if(this.isWayNeedScale){
-        //   wCtx.scale(n,n);
-        //   this.isWayNeedScale=false
-        // }
         for (let i =1;i<dataInfo.length;i++){
           const item = dataInfo[i];
           wCtx.strokeStyle=item.Stroke;
@@ -241,6 +238,7 @@
   .diTuPage{
     width: 100%;
     height: 100%;
+    overflow: auto;
   }
   .header{
     display: flex;
@@ -279,7 +277,7 @@
   .diTu{
     width: 100%;
     height: calc(100% - 70px);
-    overflow: auto;
+    /*overflow: auto;*/
   }
   .diTuList{
     position: fixed;
@@ -296,6 +294,7 @@
   .diTuListItem{
     width: 25px;
     height: 25px;
+    margin-top: 5px;
     text-align: center;
     line-height: 25px;
     border-radius: 4px;
