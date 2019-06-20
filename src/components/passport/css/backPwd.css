@@ -58,7 +58,7 @@ input {
   position: fixed;
   right: 0;
   top: 25%;
-  z-index: 101;
+  z-index: 105;
 }
 .diTuImg{
   transform-origin: top left;
@@ -73,10 +73,16 @@ input {
   text-align: center;
   line-height: 25px;
   border-radius: 4px;
+  background-color: white;
+  border: 1px solid #000;
+  box-sizing: border-box;
 }
 .diTuList .isActive{
   background-color: #1989fa;
-  color: white;
+  border: none!important;
+}
+.diTuList .isActive .diTuListItem_t{
+  color: white!important;
 }
 .fatherBg{
   position: relative;

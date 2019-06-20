@@ -24,8 +24,10 @@
     <div style="height: 70px"></div>
     <div class="diTu" :style="{visibility:canShow?'visible':'hidden'}">
       <div class="diTuList">
-        <div class="diTuListItem" :class="[activeNo ==index ? 'isActive' : '', 'diTuListItem']" v-for="(item,index) in list" @click="getPlaneChart(item.PlaneChartId,index)">
-          {{item.PlaneChartName}}
+        <div class="diTuListItem" :class="[activeNo ==index ? 'isActive' : '', 'diTuListItem']" v-for="(item,index) in list" >
+          <div class="diTuListItem_t" @click="getPlaneChart(item.PlaneChartId,index)">
+            {{item.PlaneChartName}}
+          </div>
         </div>
       </div>
       <div class="fatherBg" ref="fatherBg" :style="{width:fatherBgWidth+'px',height:'100%'}">
@@ -68,8 +70,6 @@
         minSideValue:0,
         maxSideValue:1,
         step:0.01,
-        isWayNeedScale:true,
-        isBuildingNeedScale:true,
         canShow:false
       }
     },
@@ -89,7 +89,7 @@
       }
     },
     methods:{
-      init(){
+      init(){  // 初始化获取列表
         const that = this;
         const params={
           url:'/News/GetPlaneChart',
@@ -103,13 +103,13 @@
           )
         })
       },
-      initCanvas(){
+      initCanvas(){  // 初始化canvas
         const wayCanvas = this.$refs.drawWay;
         this.wCtx = wayCanvas.getContext('2d');
         const buildingCanvas = this.$refs.drawBuilding;
         this.bCtx = buildingCanvas.getContext('2d');
       },
-      getPlaneChart(id,index){
+      getPlaneChart(id,index){  // 根据列表id获取地图及building信息
         const that = this;
         that.planeChartId = id;
         that.activeNo = index || 0;
@@ -131,7 +131,7 @@
           )
         })
       },
-      searchWay(){
+      searchWay(){   // 搜索路线
         const that = this;
         const params={
           url:'/News/GetPlanePath_BoothName',
@@ -150,14 +150,15 @@
               that.dataTwo.lst[endBoothId]
             ];
             that.$nextTick(function() {
-              that.drawBuilding(that.bCtx,that.scaleNum,drawBuildingList)
-              that.drawWay(that.wCtx,that.scaleNum,response.Data.lst);
+              that.drawBuilding(that.bCtx,drawBuildingList)
+              that.drawWay(that.wCtx,response.Data.lst);
             })
           }else(
             alert(response.Message)
           )
         })
       },
+      // 画building上的文字
       drawText(_paint, _text, _fontSzie, _color, _textAlign, _textBaseline, _startX, _height) {
         _paint.font = _fontSzie;
         _paint.fillStyle = _color;
@@ -165,7 +166,8 @@
         _paint.textBaseline = _textBaseline;
         _paint.fillText(_text, _startX, _height);
       },
-      drawBuilding(bCtx,n,dataInfo){
+      // 画建筑
+      drawBuilding(bCtx,dataInfo){
         bCtx.clearRect(0,0,this.dataTwo.DWidth,this.dataTwo.DHeight);
         bCtx.beginPath();
         for (let i =0;i<dataInfo.length;i++){
@@ -177,7 +179,7 @@
             calculationResult= item.DHeight/5
           }
           const fontSize = calculationResult;
-          const fontColor = 'red'
+          const fontColor = 'red';
           const logoW = calculationResult;
           const logoH = calculationResult;
           const x = item.PointX;
@@ -213,7 +215,8 @@
         }
         bCtx.closePath();
       },
-      drawWay(wCtx,n,dataInfo){
+      // 画路线
+      drawWay(wCtx,dataInfo){
         wCtx.clearRect(0,0,this.dataTwo.DWidth,this.dataTwo.DHeight);
         wCtx.beginPath();
         for (let i =1;i<dataInfo.length;i++){
@@ -226,21 +229,21 @@
         wCtx.stroke()
         wCtx.closePath();
       },
+      // 地图加载完 触发
       loadImage(){
-        this.drawBuilding(this.bCtx,this.scaleNum,[]);
-        this.drawWay(this.wCtx,this.scaleNum,[]);
-        // this.$refs.fatherBg.style.cssText = 'transform: scale('+this.scaleNum+');';
+        this.drawBuilding(this.bCtx,[]);
+        this.drawWay(this.wCtx,[]);
         this.$refs.fatherBg.style.cssText = 'zoom: '+this.scaleNum+';';
         this.canShow=true
       },
-      resetMap(){
-        this.slideValue=1;
-        this.drawBuilding(this.bCtx,this.scaleNum,[]);
-        this.drawWay(this.wCtx,this.scaleNum,[]);
+      resetMap(){  // 重置页面
+        this.slideValue=0;
+        this.drawBuilding(this.bCtx,[]);
+        this.drawWay(this.wCtx,[]);
         this.endNodeName='';
         this.startNodeName='';
       },
-      clearName(n){
+      clearName(n){  // input后面的清除
         if(!!n){
           this.endNodeName='';
         }else {
