@@ -16,6 +16,10 @@ import Mint from 'mint-ui';
 Vue.use(Mint);
 import 'mint-ui/lib/style.css';
 
+import vueSwiper from 'vue-awesome-swiper'
+Vue.use(vueSwiper);
+import 'swiper/dist/css/swiper.css'  //引入样式
+
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
