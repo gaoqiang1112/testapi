@@ -28,19 +28,34 @@ input {
   z-index: 102;
   background-color: white;
 }
+.header_l{
+  width: 100%;
+}
+.header_l_t,.header_l_b{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 25px;
+}
+.header_l_t_text,.header_l_b_text{
+  flex-grow: 0;
+  flex-shrink:0;
+}
 .header_l .input_border{
   display: inline-block;
   border: 1px solid #EAEAEA;
-  width: 72%;
+  flex-grow: 1;
+
 }
 .header_l .input_border img{
   vertical-align: middle;
+  margin-right: 10px;
 }
 
 .header_l input{
-  width: 81%;
+  width: 80%;
   border: none;
 }
+
 .header_r {
   width: 70px;
   height: 50px;
@@ -86,7 +101,6 @@ input {
 }
 .fatherBg{
   position: relative;
-  /*border: 1px solid red;*/
   transform-origin: top left;
 }
 #drawBuilding,#drawWay{
@@ -98,11 +112,10 @@ input {
 .sliderBar_l{
   position: absolute;
   left: 0px;
-  bottom: 0px;
+  bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
   z-index: 105;
   width: 50px;
 }

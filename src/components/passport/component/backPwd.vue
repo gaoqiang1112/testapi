@@ -3,14 +3,14 @@
     <div class="header" >
       <div class="header_l">
         <div class="header_l_t">
-          <span>起点：</span>
-          <div class="input_border">
+          <div class="header_l_t_text">起点：</div>
+          <div class="input_border" >
             <input  type="text" v-model="startNodeName">
             <img  width="16" src="../img/clear.png"  @click="clearName(0)">
           </div>
         </div>
         <div class="header_l_b">
-          <span>终点：</span>
+          <div class="header_l_b_text">终点：</div>
           <span class="input_border">
             <input  type="text" v-model="endNodeName">
             <img  width="16" src="../img/clear.png"  @click="clearName(1)">
@@ -37,11 +37,11 @@
       </div>
     </div>
     <div class="sliderBar_l" >
-      <span style="margin-bottom: 15px">缩小 </span>
+      <div style="margin-bottom: 15px;display: block;border-bottom: 1px solid #000;width: 10px"></div>
       <div :style="{ height: '100px'}">
         <van-slider v-model="slideValue" vertical :minSideValue="minSideValue" :maxSideValue="maxSideValue" :step="step" />
       </div>
-      <span style="margin-top: 15px">放大</span>
+      <span style="margin-top: 5px;transform: scale(1.3)">+</span>
     </div>
     <div class="sliderBar_r" @click="resetMap">
       还原
