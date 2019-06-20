@@ -96,7 +96,7 @@ input {
   left: 0;
 }
 .sliderBar_l{
-  position: fixed;
+  position: absolute;
   left: 0px;
   bottom: 0px;
   display: flex;
@@ -107,7 +107,7 @@ input {
   width: 50px;
 }
 .sliderBar_r{
-  position: fixed;
+  position: absolute;
   right: 10px;
   bottom: 5px;
   width: 45px;

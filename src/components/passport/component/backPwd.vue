@@ -83,7 +83,6 @@
       slideValue:function (newV,oldV) {
         if(oldV!=0){
           this.scaleNum=(this.minSideValue+(this.step*newV))
-          // this.$refs.fatherBg.style.cssText = 'transform: scale('+(this.minSideValue+(this.step*newV))+');';
           this.$refs.fatherBg.style.cssText = 'zoom: '+(this.minSideValue+(this.step*newV))+';';
         }
       }
