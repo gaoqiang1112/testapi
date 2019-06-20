@@ -37,11 +37,11 @@
       </div>
     </div>
     <div class="sliderBar_l" >
-      <div style="margin-bottom: 15px;display: block;border-bottom: 1px solid #000;width: 10px"></div>
+      <div style="margin-bottom: 15px;display: block;border-bottom: 2px solid #000;width: 15px"></div>
       <div :style="{ height: '100px'}">
         <van-slider v-model="slideValue" vertical :minSideValue="minSideValue" :maxSideValue="maxSideValue" :step="step" />
       </div>
-      <span style="margin-top: 5px;transform: scale(1.3)">+</span>
+      <span style="margin-top: 5px;transform: scale(1.7);font-weight: 700">+</span>
     </div>
     <div class="sliderBar_r" @click="resetMap">
       还原
@@ -131,31 +131,34 @@
         })
       },
       searchWay(){   // 搜索路线
-        const that = this;
-        const params={
-          url:'/News/GetPlanePath_BoothName',
-          planeChartId:that.planeChartId,
-          startNodeName:that.startNodeName,
-          endNodeName:that.endNodeName
+        if(this.startNodeName!='' && this.endNodeName!=''){
+          const that = this;
+          const params={
+            url:'/News/GetPlanePath_BoothName',
+            planeChartId:that.planeChartId,
+            startNodeName:that.startNodeName,
+            endNodeName:that.endNodeName
+          }
+          this.$http.postRequest(params).then(function (response) {
+            if(response.Code == 1){
+              that.endNodeName = response.Data.EndNodeName;
+              that.startNodeName = response.Data.StartNodeName;
+              const startBoothId = response.Data.StartBoothId;
+              const endBoothId = response.Data.EndBoothId;
+              const drawBuildingList = [
+                that.dataTwo.lst[startBoothId],
+                that.dataTwo.lst[endBoothId]
+              ];
+              that.$nextTick(function() {
+                that.drawBuilding(that.bCtx,drawBuildingList)
+                that.drawWay(that.wCtx,response.Data.lst);
+              })
+            }else(
+              alert(response.Message)
+            )
+          })
         }
-        this.$http.postRequest(params).then(function (response) {
-          if(response.Code == 1){
-            that.endNodeName = response.Data.EndNodeName;
-            that.startNodeName = response.Data.StartNodeName;
-            const startBoothId = response.Data.StartBoothId;
-            const endBoothId = response.Data.EndBoothId;
-            const drawBuildingList = [
-              that.dataTwo.lst[startBoothId],
-              that.dataTwo.lst[endBoothId]
-            ];
-            that.$nextTick(function() {
-              that.drawBuilding(that.bCtx,drawBuildingList)
-              that.drawWay(that.wCtx,response.Data.lst);
-            })
-          }else(
-            alert(response.Message)
-          )
-        })
+
       },
       // 画building上的文字
       drawText(_paint, _text, _fontSzie, _color, _textAlign, _textBaseline, _startX, _height) {
